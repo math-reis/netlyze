@@ -13,11 +13,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\mathe\\source\\repos\\Netlyze\\Netlyze\\Netlyze.csproj",
+      "projectUniqueName": "C:\\Users\\mathe\\source\\repos\\math-reis\\netlyze\\Netlyze\\Netlyze.csproj",
       "projectName": "Netlyze",
-      "projectPath": "C:\\Users\\mathe\\source\\repos\\Netlyze\\Netlyze\\Netlyze.csproj",
+      "projectPath": "C:\\Users\\mathe\\source\\repos\\math-reis\\netlyze\\Netlyze\\Netlyze.csproj",
       "packagesPath": "C:\\Users\\mathe\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\mathe\\source\\repos\\Netlyze\\Netlyze\\obj\\",
+      "outputPath": "C:\\Users\\mathe\\source\\repos\\math-reis\\netlyze\\Netlyze\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\mathe\\AppData\\Roaming\\NuGet\\NuGet.Config",
