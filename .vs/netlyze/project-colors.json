@@ -1,0 +1,16 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "86c3c897-349b-4021-988e-e42d9481a71a": {
+      "ProjectGuid": "86c3c897-349b-4021-988e-e42d9481a71a",
+      "DisplayName": "BLL",
+      "ColorIndex": 0
+    },
+    "382ea89a-1f57-4ad6-9501-c3de0e69ecdb": {
+      "ProjectGuid": "382ea89a-1f57-4ad6-9501-c3de0e69ecdb",
+      "DisplayName": "Netlyze",
+      "ColorIndex": 1
+    }
+  },
+  "NextColorIndex": 2
+}
