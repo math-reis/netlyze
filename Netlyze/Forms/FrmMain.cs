@@ -1,33 +1,30 @@
-﻿using BLL;
-using BLL.Interfaces;
-using System.Text.RegularExpressions;
+﻿using System.Text.RegularExpressions;
 
 namespace Netlyze.Forms
 {
     public partial class FrmMain : Form
     {
-        //private readonly IBLLOpenFile _busOpenFile;
-
         public FrmMain()
         {
-            //_busOpenFile = new BLLOpenFile();
-
             InitializeComponent();  
         }
+
+        #region Variables
+        int firstIndex = 0;
+        int lastIndex = 0;
+        string fileContent;
+        List<string> fileContentList = new();
+        List<string> projectNameList = new();
+        #endregion
 
         #region Events
         private void ButtonOpen_Click(object sender, EventArgs e)
         {
-            string fileContent;
-            List<string> projectList = new();
-
             fileContent = OpenFileDialog();
 
-            projectList = ParsesFileContents(fileContent);
+            fileContentList = ParsesFileContent(fileContent, fileContentList);
 
-            GetsProjectNames(projectList);
-
-
+            projectNameList = GetsProjectName(fileContentList, projectNameList);
 
         }
 
@@ -76,33 +73,40 @@ namespace Netlyze.Forms
             //MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
         }
 
-        private List<string> ParsesFileContents(string fileContent)
+        private List<string> ParsesFileContent(string fileContent, List<string> fileContentList)
         {
-            int initialIndex;
-            int finalIndex = 0;
-            int counter = Regex.Matches(fileContent, "EndProject").Count;
-
-            List<string> projectList = new();
-
-            for (int i = 0; i < counter; i++)
+            for (int i = 0; i < Regex.Matches(fileContent, "EndProject").Count; i++)
             {
-                initialIndex = fileContent.IndexOf("Project", finalIndex);
-                finalIndex = fileContent.IndexOf("EndProject", initialIndex);
+                firstIndex = fileContent.IndexOf("Project", lastIndex);
+                lastIndex = fileContent.IndexOf("EndProject", firstIndex);
 
-                string projectString = fileContent[initialIndex..finalIndex];
+                string projectString = fileContent[firstIndex..lastIndex];
 
-                projectList.Add(projectString.ToString());
+                fileContentList.Add(projectString.ToString());
             }
 
-            return projectList;
+            firstIndex = 0; lastIndex = 0;
+
+            return fileContentList;
         }
 
-        private void GetsProjectNames(List<string> projectList)
+        private List<string> GetsProjectName(List<string> fileContentList, List<string> projectNameList)
         {
-            projectList.Sort();
+            foreach (var item in fileContentList)
+            {
+                firstIndex = item.IndexOf("= \"") + 3;
+                lastIndex = item.IndexOf("\", \"");
+
+                string projectString = item[firstIndex..lastIndex];
+
+                projectNameList.Add(projectString.ToString());
+            }
+
+            firstIndex = 0; lastIndex = 0;
+
+            return projectNameList;
         }
         #endregion
-
 
     }
 }
