@@ -1,5 +1,6 @@
 ﻿using BLL;
 using BLL.Interfaces;
+using System.Text.RegularExpressions;
 
 namespace Netlyze.Forms
 {
@@ -17,9 +18,17 @@ namespace Netlyze.Forms
         #region Events
         private void ButtonOpen_Click(object sender, EventArgs e)
         {
-            OpenFileDialog();
+            string fileContent;
+            List<string> projectList = new();
 
-            //_busOpenFile.Lalalala();
+            fileContent = OpenFileDialog();
+
+            projectList = ParsesFileContents(fileContent);
+
+            GetsProjectNames(projectList);
+
+
+
         }
 
         private void ButtonParameters_Click(object sender, EventArgs e)
@@ -36,14 +45,15 @@ namespace Netlyze.Forms
         #endregion
 
         #region Accessory Methods
-        private void OpenFileDialog()
+        private string OpenFileDialog()
         {
             var fileContent = string.Empty;
             var filePath = string.Empty;
 
             using (OpenFileDialog openFileDialog = new())
             {
-                openFileDialog.InitialDirectory = "c:\\";
+                //openFileDialog.InitialDirectory = "c:\\";
+                openFileDialog.InitialDirectory = "c:\\Users\\mathe\\source\\repos";
                 openFileDialog.Filter = "txt files (*.txt)|*.txt|All files (*.*)|*.*";
                 openFileDialog.FilterIndex = 2;
                 openFileDialog.RestoreDirectory = true;
@@ -61,7 +71,35 @@ namespace Netlyze.Forms
                 }
             }
 
-            MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
+            return fileContent;
+
+            //MessageBox.Show(fileContent, "File Content at path: " + filePath, MessageBoxButtons.OK);
+        }
+
+        private List<string> ParsesFileContents(string fileContent)
+        {
+            int initialIndex;
+            int finalIndex = 0;
+            int counter = Regex.Matches(fileContent, "EndProject").Count;
+
+            List<string> projectList = new();
+
+            for (int i = 0; i < counter; i++)
+            {
+                initialIndex = fileContent.IndexOf("Project", finalIndex);
+                finalIndex = fileContent.IndexOf("EndProject", initialIndex);
+
+                string projectString = fileContent[initialIndex..finalIndex];
+
+                projectList.Add(projectString.ToString());
+            }
+
+            return projectList;
+        }
+
+        private void GetsProjectNames(List<string> projectList)
+        {
+            projectList.Sort();
         }
         #endregion
 

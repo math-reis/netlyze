@@ -139,6 +139,7 @@
             this.MaximumSize = new System.Drawing.Size(720, 480);
             this.MinimumSize = new System.Drawing.Size(720, 480);
             this.Name = "FrmMain";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Netlyze | Best practice analysis for .NET";
             this.ResumeLayout(false);
 
